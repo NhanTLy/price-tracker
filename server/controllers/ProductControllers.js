@@ -10,7 +10,7 @@ productController.getProducts = (req, res, next) => {
   //NEW QUERY
   const userProducts = `SELECT * FROM products 
   JOIN lowest_daily_price ON (products._id=lowest_daily_price.product_id) 
-  WHERE user_id=$1
+  WHERE products.user_id=$1
   ORDER BY lowest_daily_price.product_id, lowest_daily_price.timestamp DESC
   `;
 
@@ -128,12 +128,14 @@ productController.deleteProduct = async(req, res, next) => {
 
 //Edit product desired price
 productController.editProduct = async (req, res, next) => {
-  const {desiredPrice} = req.body;
+  const { id } = req.params
+  const {desired_price, email_preference} = req.body;
 
   try {
-    const editProduct = 'UPDATE products SET desired_price = $1 WHERE _id = $2'
-    const product = await priceTrackerDB.query(editProduct, [desiredPrice, id])
-    res.locals.product = product.rows[0];
+    const editProduct = 'UPDATE products SET desired_price = $1, email_preference = $2 WHERE _id = $3 RETURNING *'
+    const product = await priceTrackerDB.query(editProduct, [desired_price, email_preference, id])
+    res.locals.email_preference = product.rows[0].email_preference;
+    res.locals.desired_price = product.rows[0].desired_price;
     next()
   } catch (error) {
     next({
@@ -148,7 +150,8 @@ productController.editProduct = async (req, res, next) => {
 
 productController.getOneProduct = (req, res, next) => {
   const userProduct = `SELECT * FROM products 
-  WHERE product_id=$1
+  JOIN lowest_daily_price ON (products._id=lowest_daily_price.product_id) 
+  WHERE products._id=$1
   `;
 
   const { id } = req.params
@@ -156,7 +159,6 @@ productController.getOneProduct = (req, res, next) => {
   priceTrackerDB
     .query(userProduct, [id])
     .then((data) => {
-      console.log(data.rows[0])
       res.locals.product = data.rows[0];
       return next();
     })

@@ -16,8 +16,6 @@ const getProductInfo = async (url) => {
     // headless: false,
   });
 
-  console.log('url :', url);
-
   const page = await browser.newPage();
   await page.goto(url, {waitUntil: 'networkidle0'});
 
@@ -41,7 +39,6 @@ const getProductInfo = async (url) => {
       '.g9WBQb',
       (el) => el.innerHTML
     );
-    console.log(productInfo.lowest_daily_price);
   } catch (err) {
     console.log('Puppeteer', err);
   }
@@ -74,7 +71,6 @@ const getProductInfo = async (url) => {
   // console.log("productInfo OBJECT: ", productInfo);
 
   await browser.close();
-  console.log('full product info', productInfo);
 
   return productInfo;
 };

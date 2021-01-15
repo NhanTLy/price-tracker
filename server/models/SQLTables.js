@@ -9,11 +9,11 @@ const productsTable = `
     product_name VARCHAR NOT NULL,
     image_url VARCHAR NOT NULL,
     google_url VARCHAR UNIQUE
-    desired_price DECIMAL,  
+    desired_price MONEY,  
     price_history jsonb[],
     user_id INT NOT NULL,
     category VARCHAR,
-    email_preference VARCHAR,
+    email_preference BOOLEAN,
     FOREIGN KEY (user_id) references users(_id)
     PRIMARY KEY (_id)
   )`;

@@ -98,9 +98,6 @@ const ProductCard = ({
                 {storeName}
               </a>
             </Typography>
-            <Typography variant="overline" display="block">
-              Id: {productId}
-            </Typography>
           </CardContent>
           <CardActions>
             <Button
