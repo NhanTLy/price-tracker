@@ -72,9 +72,15 @@ authController.retrieveToken = (req, res, next) => {
 };
 
 authController.verifyToken = (req, res, next) => {
-  jwt.verify(res.locals.token, process.env.SECRET_KEY, (err, data) => {
-    if (err) {
-      res.status(403).json({ message: "Session token authorization failed" });
+  jwt.verify(res.locals.token, process.env.SECRET_KEY, (error, data) => {
+    if (error) {
+      next({
+        log: "authController.verifyToken: Session token incorrect",
+        status: 403,
+        message: {
+          err: "Session token incorrect. Access forbidden.",
+        },
+      })
     } else {
       res.locals.userId = data.user
       next()
@@ -104,7 +110,6 @@ authController.verifyUser = (req, res, next) => {
                 expiresIn: "30m",
               });
               res.locals.token = token;
-              res.cookie("sessionToken", token);
               return next();
             } else {
               return next({

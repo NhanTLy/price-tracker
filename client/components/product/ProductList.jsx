@@ -22,10 +22,10 @@ const ProductList = () => {
   });
 
   useEffect(() => {
-    fetch('/api/productsjson', {
+    fetch('/api/products', {
       method: 'GET',
       headers: {
-        // Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((res) => {
@@ -75,6 +75,7 @@ const ProductList = () => {
             ({
               _id,
               product_name,
+              product_id,
               store_url,
               store_name,
               lowest_daily_price,
@@ -83,7 +84,7 @@ const ProductList = () => {
               return (
                 <>
                   <ProductCard
-                    productId={_id}
+                    productId={product_id}
                     key={uuidv4()}
                     productName={product_name}
                     imageUrl={image_url}

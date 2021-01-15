@@ -42,18 +42,24 @@ const NavBar = () => {
             {user ? user.email : ''}
           </Typography>
         </div>
+        <div>
+          <Button>
         <Link to="/home" style={{ color: 'white', textDecoration: 'none' }}>
           Home
         </Link>
+        </Button>
+        <Button>
         <Link
           to="/favorites"
           style={{ color: 'white', textDecoration: 'none' }}
         >
           Favorites
         </Link>
+        </Button>
         <Button onClick={logOut} color="inherit" endIcon={<ExitToAppIcon />}>
           Logout
         </Button>
+        </div>
       </Toolbar>
     </AppBar>
   );

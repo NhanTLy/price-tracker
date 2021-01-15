@@ -38,7 +38,7 @@ productRouter.post(
   authController.verifyToken,
   productController.addProduct,
   (req, res) => {
-    res.status(200).json({ product: res.locals.product });
+    res.status(200).json({ product: res.locals.product, message: "Product Added to Favorites!" });
   }
 );
 
@@ -61,8 +61,9 @@ productRouter.put(
   productController.editProduct,
   (req, res) => {
     res.status(200).json({
-      message: 'Product desired price updated',
-      product: res.locals.product,
+      message: 'Product Updated',
+      email_preference: res.locals.email_preference,
+      desired_price: res.locals.desired_price
     });
   }
 );

@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import NavBar from '../nav/NavBar';
 import { useAuth } from '../routes/useAuth';
 import { useParams } from 'react-router-dom';
+import useInput from '../hooks/useInput';
 import DailyPriceChart from './DailyPriceChart';
+import ProductForm from './ProductForm';
 import {
   Grid,
   Card,
@@ -37,10 +39,10 @@ const Favorite = () => {
   productId = Number(productId);
 
   useEffect(() => {
-    fetch('/api/product', {
+    fetch(`/api/products/${productId}`, {
       method: 'GET',
       headers: {
-        // Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((res) => {
@@ -98,6 +100,14 @@ const Favorite = () => {
               </Link>
             </Typography>
             <Typography variant="h4">{`$ ${favorite.lowest_daily_price}`}</Typography>
+            <ProductForm
+              productId={favorite.product_id}
+              productUrl={favorite.product_url}
+              productName={favorite.product_name}
+              formType="edit"
+              price={favorite.desired_price}
+              emailPreference={favorite.email_preference}
+            />
           </CardContent>
         </Card>
         <Grid
