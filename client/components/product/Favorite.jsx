@@ -108,6 +108,7 @@ const Favorite = () => {
               formType="edit"
               price={favorite.desired_price}
               emailPreference={favorite.email_preference}
+              setOpen={null}
             />
             </CardContent>
           </CardContent>

@@ -47,7 +47,7 @@ const AddProduct = ({ setOpen, productId, productUrl, productName }) => {
 
   return (
     <div className={classes.registerForm}>
-      <Response alert={alert} />
+      {/* <Response alert={alert} /> */}
       <IconButton
         aria-label="close"
         onClick={handleClose}
@@ -66,6 +66,8 @@ const AddProduct = ({ setOpen, productId, productUrl, productName }) => {
         productName={productName}
         formType="add"
         setOpen={setOpen}
+        price={null}
+        emailPreference={false}
       />
     </div>
   );

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
@@ -40,7 +41,7 @@ const ProductForm = ({
     message: '',
   });
 
-  const [desiredPrice, updateDesiredPrice, resetDesiredPrice] = useInput(
+  const [desiredPrice, updateDesiredPrice] = useInput(
     formType === 'add' ? '$0.0' : price
   );
 
@@ -52,6 +53,7 @@ const ProductForm = ({
   const [buttonDisabled, setButtonDisable] = useState(false);
 
   const handleChange = (event) => {
+    console.log('handle change event', event.target.checked);
     setEmailNotification(event.target.checked);
   };
 
@@ -59,10 +61,10 @@ const ProductForm = ({
     e.preventDefault();
 
     if (!desiredPrice) {
-      setAlert({
-        type: 'error',
-        message: 'Price input is required.',
-      });
+      // setAlert({
+      //   type: 'error',
+      //   message: 'Price input is required.',
+      // });
       return;
     }
 
@@ -84,7 +86,7 @@ const ProductForm = ({
     })
       .then((res) => {
         if (res.status === 200) return res.json();
-        else if (res.status === 403) auth.signout(() => history.push('/'));
+        else if (res.status === 403) return auth.signout(() => history.push('/'));
 
         return res.json().then(({ err }) => {
           throw err;
@@ -92,29 +94,36 @@ const ProductForm = ({
       })
       .then(({ message, email_preference, desired_price }) => {
         setButtonDisable(false);
-        setAlert({
-          type: 'success',
-          message: message,
-        });
+        // setAlert({
+        //   type: 'success',
+        //   message: message,
+        // });
         if (formType === 'edit') {
           setEmailNotification(email_preference);
+          console.log('before :', desiredPrice);
           updateDesiredPrice(desired_price);
+          console.log('after :', desiredPrice);
+          return;
         }
 
-        if(formType === 'add') setOpen(false);
+        if(formType === 'add') {
+          setOpen(false);
+          return;
+        }
       })
       .catch((err) => {
         setButtonDisable(false);
-        setAlert({
-          type: 'error',
-          message: err,
-        });
+        // setAlert({
+        //   type: 'error',
+        //   message: err,
+        // });
       });
   };
+  // console.log(alert);
 
   return (
     <>
-    <Response alert={alert} />
+    {/* <Response alert={alert} /> */}
       <form className={classes.loginForm} onSubmit={handleSubmit}>
         {formType === 'add' && (
           <TextField
