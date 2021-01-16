@@ -65,6 +65,7 @@ const AddProduct = ({ setOpen, productId, productUrl, productName }) => {
         productUrl={productUrl}
         productName={productName}
         formType="add"
+        setOpen={setOpen}
       />
     </div>
   );

@@ -15,6 +15,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import Switch from '@material-ui/core/Switch';
+import Response from '../alert/response';
 
 const ProductForm = ({
   productId,
@@ -23,6 +24,7 @@ const ProductForm = ({
   formType,
   price,
   emailPreference,
+  setOpen
 }) => {
   const classes = useStyles();
 
@@ -47,6 +49,8 @@ const ProductForm = ({
   );
   const handleClose = () => setOpen(false);
 
+  const [buttonDisabled, setButtonDisable] = useState(false);
+
   const handleChange = (event) => {
     setEmailNotification(event.target.checked);
   };
@@ -62,10 +66,10 @@ const ProductForm = ({
       return;
     }
 
-    // const desired_price = Number(desiredPrice);
     const url =
       formType === 'add' ? '/api/products/' : `/api/products/${productId}`;
 
+    setButtonDisable(true);
     fetch(url, {
       method: formType === 'add' ? 'POST' : 'PUT',
       headers: {
@@ -87,6 +91,7 @@ const ProductForm = ({
         });
       })
       .then(({ message, email_preference, desired_price }) => {
+        setButtonDisable(false);
         setAlert({
           type: 'success',
           message: message,
@@ -95,8 +100,11 @@ const ProductForm = ({
           setEmailNotification(email_preference);
           updateDesiredPrice(desired_price);
         }
+
+        if(formType === 'add') setOpen(false);
       })
       .catch((err) => {
+        setButtonDisable(false);
         setAlert({
           type: 'error',
           message: err,
@@ -106,6 +114,7 @@ const ProductForm = ({
 
   return (
     <>
+    <Response alert={alert} />
       <form className={classes.loginForm} onSubmit={handleSubmit}>
         {formType === 'add' && (
           <TextField
@@ -115,6 +124,7 @@ const ProductForm = ({
             label="Product Name"
             variant="filled"
             value={productName}
+            style={{marginBottom: '20px'}}
           />
         )}
         <TextField
@@ -125,6 +135,7 @@ const ProductForm = ({
           value={desiredPrice}
           onChange={updateDesiredPrice}
           type="text"
+          style={{marginBottom: '20px'}}
         />
 
         <FormControlLabel
@@ -139,12 +150,14 @@ const ProductForm = ({
           }
           label="Send Email Notifications"
           labelPlacement="top"
+          style={{marginBottom: '20px'}}
         />
         <Button
           className={classes.registerBtn}
           type="submit"
           variant="contained"
           color="primary"
+          disabled={buttonDisabled}
         >
           {formType === 'add' ? 'Add Product' : 'Update Product'}
         </Button>

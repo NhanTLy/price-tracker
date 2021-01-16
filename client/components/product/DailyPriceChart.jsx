@@ -10,7 +10,7 @@ const DailyPriceChart = ({ priceHistory }) => {
   });
 
   const drawChart = () => {
-    const svgWidth = 600,
+    const svgWidth = 800,
       svgHeight = 400;
     const margin = { top: 20, right: 20, bottom: 30, left: 50 };
     const width = svgWidth - margin.left - margin.right;
@@ -20,10 +20,8 @@ const DailyPriceChart = ({ priceHistory }) => {
       .select('#container')
       .style('background-color', '#f3f3f3')
       .append('svg')
-      .attr('width', svgWidth)
-      .attr('height', svgHeight);
-    // .attr('viewBox', `0 0 ${svgWidth} ${svgHeight}`)
-    // .attr('preserveAspectRatio', 'xMidYMid Meet');
+      .attr('viewBox', `0 0 ${svgWidth} ${svgHeight}`)
+      .attr('preserveAspectRatio', 'xMidYMid Meet');
 
     const g = svg
       .append('g')

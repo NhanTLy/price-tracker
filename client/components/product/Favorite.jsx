@@ -94,12 +94,13 @@ const Favorite = () => {
             }}
           >
             <img src={favorite.image_url} />
-            <Typography variant="h6">
+            <CardContent>
+            <Typography variant="h6" style={{marginBottom: '20px'}}>
               <Link href={favorite.store_url} target="_blank">
                 {favorite.store_name}
               </Link>
             </Typography>
-            <Typography variant="h4">{`$ ${favorite.lowest_daily_price}`}</Typography>
+            <Typography variant="h4" style={{marginBottom: '20px'}}>{`$ ${favorite.lowest_daily_price}`}</Typography>
             <ProductForm
               productId={favorite.product_id}
               productUrl={favorite.product_url}
@@ -108,6 +109,7 @@ const Favorite = () => {
               price={favorite.desired_price}
               emailPreference={favorite.email_preference}
             />
+            </CardContent>
           </CardContent>
         </Card>
         <Grid
@@ -121,7 +123,7 @@ const Favorite = () => {
           }}
         >
           <Card style={{ height: '100vh', overflow: 'none' }}>
-            <Typography variant="h2" style={{ margin: '20px' }}>
+            <Typography variant="h5" style={{ margin: '20px' }}>
               Lowest Daily Prices
             </Typography>
             <CardMedia>
