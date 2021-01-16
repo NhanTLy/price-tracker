@@ -10,9 +10,9 @@ const DailyPriceChart = ({ priceHistory }) => {
   });
 
   const drawChart = () => {
-    const svgWidth = 800,
+    const svgWidth = 1000,
       svgHeight = 400;
-    const margin = { top: 20, right: 20, bottom: 30, left: 50 };
+    const margin = { top: 20, right: 20, bottom: 30, left: 80 };
     const width = svgWidth - margin.left - margin.right;
     const height = svgHeight - margin.top - margin.bottom;
 
@@ -52,7 +52,7 @@ const DailyPriceChart = ({ priceHistory }) => {
     );
 
     g.append('g')
-      .attr('transform', 'translate(0,' + height + ')')
+      .attr('transform', 'translate(-50,' + height + ')')
       .call(
         d3
           .axisBottom(x)

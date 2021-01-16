@@ -6,8 +6,8 @@ import {
   CardActionArea,
   CardActions,
   CardContent,
-  CardTitle,
   CardMedia,
+  CardTitle,
   Button,
   Typography,
 } from '@material-ui/core';
@@ -71,7 +71,7 @@ const ProductCard = ({
     <>
       <Grid container item xs={12} sm={6} md={4} lg={3} direction="column">
         <Card
-          className={classes.productCard}
+          // className={classes.productCard}
           style={{
             display: 'flex',
             // alignItems: 'flex-end',
